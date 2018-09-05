@@ -45,13 +45,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
         Posts::create([
             'body' => request('message'),
             'title' => request('title'),
+            'category_id' => request('category'),
             'user_id' => auth()->id()
         ]);
-        return view('home', ['posts' => Posts::all()]);
+        return redirect()->action('MainController@index');
     }
 
     /**
@@ -106,10 +106,8 @@ class PostController extends Controller
      */
     public function destroy(Request $request)
     {
-        //
-        $post = Posts::find($request->id);
 
-        if($post !== null) $post->delete();
+        Posts::destroy($request->id);
 
         return redirect()->route('home');
     }

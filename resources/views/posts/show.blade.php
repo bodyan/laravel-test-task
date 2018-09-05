@@ -25,7 +25,7 @@
               <a href="#">Start Bootstrap</a>
               on July 8, 2018
                 <a href="{{ route('post.edit', ['id' => $post->id]) }}">[Edit]</a>
-                <a href="{{ route('post.delete', ['id' => $post->id]) }}">[Delete]</a>
+                <a href="{{ route('post.delete', ['id' => $post->id]) }}" onclick="return confirm('Really delete this Post?')">[Delete]</a>
             </p>
             </div>
           <hr>

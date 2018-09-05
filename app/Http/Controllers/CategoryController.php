@@ -24,7 +24,7 @@ class CategoryController extends Controller
     public function show(Request $request)
     {
         
-        $category = Category::find($request->id);
+        $category = Category::with('posts')->find($request->id);
 
         if($category !== null) 
             return view('category.show', ['category' => $category]);
@@ -34,8 +34,6 @@ class CategoryController extends Controller
 
     public function create()
     {
-        // TODO: add validating for category input
-        // Validate the request...
         return view('category.create');
     }
 
@@ -53,12 +51,13 @@ class CategoryController extends Controller
 
     public function update(Request $request)
     {
-        dump($request); exit();
         $category = Category::find($request->id);
         
         $category->title = $request->title;
-
+        $category->description = $request->message;
         $category->save();
+
+        return redirect()->action('MainController@index');
     }
     /**
      * Delete a blog category.
@@ -86,6 +85,7 @@ class CategoryController extends Controller
     {
         Category::create([
             'title' => request('title'),
+            'description' => request('message'),
             'user_id' => auth()->id()
         ]);
  		return redirect()->action('MainController@index');

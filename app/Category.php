@@ -12,16 +12,16 @@ class Category extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'user_id'
+        'title', 'user_id', 'description'
     ];
 
     public function posts()
     {
-        return $this->hasMany('Posts');
+        return $this->hasMany('App\Posts');
     }
 
     public function user()
     {
-        return $this->belongsTo('User');
+        return $this->belongsTo('App\User');
     }
 }

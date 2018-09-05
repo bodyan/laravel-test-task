@@ -56,4 +56,9 @@
             console.error( error );
         } );
 </script>
+<style>
+	.ck-editor__editable {
+      min-height: 200px;
+    }
+</style>
 @endsection

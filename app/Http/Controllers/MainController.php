@@ -11,6 +11,9 @@ class MainController extends Controller
 {
     public function index()
     {
-    	return view('home', ['posts' => Posts::all()]);
+    	$posts = Posts::with(['user','category'])->get();
+    	$categories = Category::all();
+    	
+		return view('home', ['posts' => $posts, 'categories' => $categories]);
     }
 }

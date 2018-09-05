@@ -32,7 +32,7 @@ class User extends Authenticatable
         return $this->hasMany('Posts');
     }
 
-    public function categories()
+    public function category()
     {
         return $this->hasMany('Category');
     }

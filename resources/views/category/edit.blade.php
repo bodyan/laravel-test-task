@@ -12,31 +12,45 @@
 	            </a> first.
 			</div>
 		@else
-
         <div class="col-md-8">
-		<form method="category" action="{{ route('category.update') }}" aria-label="{{ __('Edit Category') }}">
+		<form method="POST" action="{{ route('category.update') }}" aria-label="{{ __('Edit Category') }}">
 			@csrf
 			<input type="hidden" name="id" value="{{ $category->id }}">	
-		  <div class="form-group">
-		    <input class="form-control form-control-lg" type="text" name="title" value="{{ $category->title }}" required>
-		  </div>
-<!-- 		  <div class="form-group">
-  <textarea class="form-control" id="textare-body" name="message" rows="4">{{ $category->body }}</textarea>
-</div> -->
-        <div class="form-group row mb-0">
-            <div class="col-md-8">
-                <button type="submit" class="btn btn-primary">
-                    {{ __('Edit Category') }}
-                </button>
+			<div class="form-group">
+				<input class="form-control form-control-lg" type="text" name="title" value="{{ $category->title }}" required>
+			</div>
+			<div class="form-group">
+			  <textarea class="form-control" id="editor" name="message" rows="4">{{ $category->description }}</textarea>
+			</div>
+	        <div class="form-group row mb-0">
+	            <div class="col-md-8">
+	                <button type="submit" class="btn btn-primary">
+	                    {{ __('Edit Category') }}
+	                </button>
 
-                <a class="btn btn-secondary" href="{{ route('home') }}">
-                    {{ __('Cancel') }}
-                </a>
-            </div>
-        </div>
+	                <a class="btn btn-secondary" href="{{ route('home') }}">
+	                    {{ __('Cancel') }}
+	                </a>
+	            </div>
+	        </div>
+	        <br>
 		</form>
         </div>
 		@endguest
     </div>
 </div>
+<script src="https://cdn.ckeditor.com/ckeditor5/11.0.1/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+<style>
+	.ck-editor__editable {
+      min-height: 200px;
+    }
+</style>
+
 @endsection

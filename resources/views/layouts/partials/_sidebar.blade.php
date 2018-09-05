@@ -2,8 +2,9 @@
           <div class="sidebar-module">
             <h4>Categories</h4>
             <ol class="list-unstyled">
-              <li><a href="#">New Category</a></li>
-              <li><a href="#">Category 2</a></li>
+              @foreach($categories as $category)
+              <li><a href="{{ route('category.show', ['id' => $category->id ])}} ">{{ $category->title }}</a></li>
+              @endforeach  
             </ol>
           </div>          
           <div class="sidebar-module">
