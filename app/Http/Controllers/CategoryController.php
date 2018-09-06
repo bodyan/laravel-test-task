@@ -3,24 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use \Illuminate\Validation\Validator;
 use App\Posts;
 use App\Category;
 use App\User;
-use \Illuminate\Validation\Validator;
 
 class CategoryController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth')->except(['index']);
+        $this->middleware('auth')->except(['index', 'show']);
     }
 
+    /**
+     * Show all categories.
+     *
+     * @return Response
+     */
     public function index()
     {
             return view('category.index', ['categories' => Category::all()]);
     }
 
+    /**
+     * Show a blog category.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
     public function show(Request $request)
     {
         
@@ -32,6 +43,11 @@ class CategoryController extends Controller
             return redirect()->action('MainController@index');
     }
 
+    /**
+     * Create a blog category.
+     *
+     * @return Response
+     */
     public function create()
     {
         return view('category.create');
@@ -59,20 +75,19 @@ class CategoryController extends Controller
 
         return redirect()->action('MainController@index');
     }
+
     /**
      * Delete a blog category.
      *
      * @param  Request  $request
      * @return Response
      */
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
 
-        $category = Category::find($request->id);
+        Category::destroy($request->id);
 
-        if($category !== null) $category->delete();
-
-        return redirect()->action('MainController@index');
+        return redirect()->route('home');
     }
 
     /**
