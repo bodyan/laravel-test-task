@@ -45,9 +45,15 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate(request(),[
+            'title' => 'required|min:2|max:255',
+            'message' => 'required|min:2',
+            'category' => 'required'
+        ]);
+
         Posts::create([
-            'body' => request('message'),
             'title' => request('title'),
+            'body' => request('message'),
             'category_id' => request('category'),
             'user_id' => auth()->id()
         ]);
@@ -62,7 +68,8 @@ class PostController extends Controller
      */
     public function show(Posts $post)
     {
-        return view('posts.show', ['post' => $post]);
+        $posts = Posts::with(['user','category','comments'])->find($post->id);
+        return view('posts.show', ['post' => $posts]);
     }
 
     /**
@@ -87,12 +94,17 @@ class PostController extends Controller
      */
     public function update(Request $request)
     {
-        //
-        $posts = Posts::find($request->id);
+        $this->validate(request(),[
+            'title' => 'required|min:2|max:255',
+            'message' => 'required|min:2',
+            'category' => 'required'
+        ]);
+
+        $posts = Posts::find(request('id'));
         
-        $posts->title = $request->title;
-        $posts->body = $request->message;
-        $posts->category_id = $request->category;
+        $posts->title = request('title');
+        $posts->body = request('message');
+        $posts->category_id = request('category');
         $posts->save();
 
         return redirect()->route('post.show', ['id' => $request->id]);
