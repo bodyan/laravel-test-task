@@ -12,45 +12,30 @@
 	            </a> first.
 			</div>
 		@else
-
         <div class="col-md-8">
 		<form method="POST" action="{{ route('category.create') }}" aria-label="{{ __('Add Category') }}">
 			@csrf
-		  <div class="form-group">
-		    <input class="form-control form-control-lg" type="text" placeholder="Category Name" name="title" required>
-		  </div>
-		<div class="form-group">
-			<label for="textarea-body">Description:</label>
-		  <textarea class="form-control" id="editor" name="message" rows="4"></textarea>
-		</div>
-        <div class="form-group row mb-0">
-            <div class="col-md-8">
-                <button type="submit" class="btn btn-primary">
-                    {{ __('Add Category') }}
-                </button>
-
-                <a class="btn btn-secondary" href="{{ route('home') }}">
-                    {{ __('Cancel') }}
-                </a>
-            </div>
-        </div>
+			<div class="form-group">
+				<input class="form-control form-control-lg" type="text" placeholder="Category Name" name="title" required>
+			</div>
+			<div class="form-group">
+				<label for="textarea-body">Description:</label>
+				<textarea class="form-control" id="editor" name="message" rows="4"></textarea>
+			</div>
+	        <div class="form-group row mb-0">
+	            <div class="col-md-8">
+	                <button type="submit" class="btn btn-primary">
+	                    {{ __('Add Category') }}
+	                </button>
+	                <a class="btn btn-secondary" href="{{ route('home') }}">
+	                    {{ __('Cancel') }}
+	                </a>
+	            </div>
+	        </div>
 		</form>
 		<br>
         </div>
 		@endguest
     </div>
 </div>
-<script src="https://cdn.ckeditor.com/ckeditor5/11.0.1/classic/ckeditor.js"></script>
-<script>
-    ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .catch( error => {
-            console.error( error );
-        } );
-</script>
-<style>
-	.ck-editor__editable {
-      min-height: 200px;
-    }
-</style>
 @endsection
