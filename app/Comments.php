@@ -12,7 +12,7 @@ class Comments extends Model
      * @var array
      */
     protected $fillable = [
-        'content', 'user_id'
+        'content', 'user_id', 'posts_id'
     ];
 
     public function post()

@@ -32,6 +32,8 @@ Route::get('/category/{id}', 'CategoryController@show')->name('category.show');
 Route::get('/category/{id}/edit', 'CategoryController@edit')->name('category.edit');
 Route::get('/category/{id}/delete', 'CategoryController@delete')->name('category.delete');
 
+//Category
+Route::post('posts/{post}/comments', 'CommentsController@store')->name('comments.create');
 
 
 

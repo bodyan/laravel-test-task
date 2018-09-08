@@ -18,6 +18,7 @@
         <div class="col-md-8">
 		<form method="POST" action="{{ route('post.create') }}" aria-label="{{ __('Add Post') }}">
 			@csrf
+			@include('layouts.errors')
 		  <div class="form-group">
 		    <input class="form-control form-control-lg" type="text" placeholder="Title goes here..." name="title" required>
 		  </div>
@@ -43,7 +44,7 @@
                 </a>
             </div>
         </div>
-        <br>
+		<br>
 		</form>
         </div>
 		@endguest
