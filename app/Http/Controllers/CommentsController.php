@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Comments;
+use App\Posts;
 
 class CommentsController extends Controller
 {
@@ -32,9 +34,20 @@ class CommentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Posts $post)
     {
-        //
+
+        $this->validate(request(),[
+            'comment' => 'required|min:2',
+        ]);
+
+        Comments::create([
+            'content' => request('comment'),
+            'posts_id' => $post->id,
+            'user_id' => auth()->id()
+        ]);
+
+        return back();
     }
 
     /**
