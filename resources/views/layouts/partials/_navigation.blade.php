@@ -10,7 +10,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                       <li><a class="nav-link active" href=" {{route('home')}} ">Home</a></li>
-                      <li><a class="nav-link" href=" {{route('post.create')}} ">About</a></li>
+                      <li><a class="nav-link" href="#">About</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -24,6 +24,9 @@
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('post.create') }}">{{ __('Add Post') }}</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>

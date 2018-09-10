@@ -29,12 +29,12 @@ class User extends Authenticatable
 
     public function posts()
     {
-        return $this->hasMany('Posts');
+        return $this->hasMany('App\Posts');
     }
 
     public function category()
     {
-        return $this->hasMany('Category');
+        return $this->hasMany('App\Category');
     }
 
     public function comments()

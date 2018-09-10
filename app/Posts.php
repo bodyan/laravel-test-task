@@ -30,6 +30,4 @@ class Posts extends Model
         return $this->hasMany('App\Comments');
     }
 
-    
-
 }

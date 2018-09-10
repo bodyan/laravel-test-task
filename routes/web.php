@@ -12,8 +12,8 @@
 */
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/', 'MainController@index')->name('home');
+Route::get('/home', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('home');
 
 //Posts
 Route::get('/post/add', 'PostController@create')->name('post.create');
@@ -33,6 +33,7 @@ Route::get('/category/{id}/edit', 'CategoryController@edit')->name('category.edi
 Route::get('/category/{id}/delete', 'CategoryController@delete')->name('category.delete');
 
 //Category
+Route::post('posts/ajaxstore', 'CommentsController@ajaxstore')->name('comments.ajaxstore');
 Route::post('posts/{post}/comments', 'CommentsController@store')->name('comments.create');
 
 
