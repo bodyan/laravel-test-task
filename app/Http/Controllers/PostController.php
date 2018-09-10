@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Posts;
 use App\Category;
 use App\User;
+use App\Comments;
 
 class PostController extends Controller
 {
@@ -66,10 +67,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Posts $post)
+    public function show(Posts $post, Comments $comments)
     {
         $posts = Posts::with(['user','category','comments'])->find($post->id);
-        return view('posts.show', ['post' => $posts]);
+        $com = $comments->getComments($post->id);
+        
+        return view('posts.show', ['post' => $posts, 'comments' => $com]);
     }
 
     /**

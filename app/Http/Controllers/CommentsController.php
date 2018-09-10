@@ -94,4 +94,25 @@ class CommentsController extends Controller
     {
         //
     }
+
+    public function ajaxstore(Request $request)
+    {
+        //if not logged in  - return empty array
+        if(!auth()->id()) return response()->json([]);
+
+        Comments::create([
+            'content' => request('comment'),
+            'posts_id' => request('id'),
+            'user_id' => auth()->id()
+        ]);
+
+        $comment = Comments::with('user')->latest()->first();
+        $result = [
+            'comment' => $comment->content,
+            'name' =>  $comment->user->name,
+            'date' =>  $comment->created_at->diffForHumans()
+        ];
+
+        return response()->json($result);
+    }
 }

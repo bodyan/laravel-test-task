@@ -14,8 +14,11 @@
             <p class="small post-meta">Posted by
               <a href="#">Start Bootstrap</a>
               on July 8, 2018
+              @guest
+              @else
                 <a href="{{ route('post.edit', ['id' => $post->id]) }}">[Edit]</a>
                 <a href="{{ route('post.delete', ['id' => $post->id]) }}" onclick="return confirm('Really delete this Post?')">[Delete]</a>
+              @endguest 
             </p>
               <p class="post-subtitle">
                 {!! $post->body !!}
@@ -24,39 +27,64 @@
 
         <div class="well">
         @include('layouts.errors')
+        @guest
+        @else
         <h4>What is on your mind?</h4>
-            <form  method="POST" action="{{ route('comments.create', ['post' => $post->id]) }}">
-                @csrf
-                <div class="form-group">
-                    <input type="textarea" class="form-control" id="userComment" placeholder="Write your message here..." name="comment" required>
-                </div>
-                <button type="submit" class="btn btn-primary">
-                    {{ __('Add Comment') }}
-                </button>
-            </form>    
-            <hr>
-            <ul id="sortable" class="list-unstyled ui-sortable">
-                @foreach($post->comments as $comment)
-                <strong class="pull-left primary-font">James</strong>
-                <small class="pull-right text-muted">
-                   <span class="glyphicon glyphicon-time"></span>7 mins ago
-                </small>
-                </br>
-                <li class="ui-state-default"> {{$comment->content}}</li>
-                </br>
-                @endforeach
-            </ul>
+            <div class="form-group">
+                <input type="textarea" class="form-control" id="userComment" placeholder="Write your message here..." name="comment" required>
+            </div>
+            <button id="commentCubmit" class="btn btn-primary">
+                {{ __('Add Comment') }}
+            </button>
+        @endguest 
+        <hr>
+        <h6>Comments:</h6>
+        <ul id="sortable" class="list-unstyled ui-sortable">
+            @foreach($comments as $comment)
+            <strong class="pull-left primary-font">{{$comment->name}}</strong>
+            <small class="pull-right text-muted">
+               <span class="glyphicon glyphicon-time"></span>{{ $comment->created_at }}
+            </small>
+            </br>
+            <li class="ui-state-default"> {{$comment->content}}</li>
+            </br>
+            @endforeach
+        </ul>
+
+
         </div>
         <br>
         </div>
     </div>
 </div>
 
-<button class="btn btn-primary" id="ajax-test">Press me</button>
+<script src="{{ asset('js/jquery-3.3.1.min.js') }}" ></script>
+
 <script>
-    var count = 1;
-    document.getElementById('ajax-test').onclick = function() {
-       alert("button was clicked " + (count++) + " times");
-    };
+$(document).ready(function(){
+    $('#commentCubmit').click(function() {
+        var comment = document.getElementById('userComment').value;
+        $.ajax({
+            url: "{{ route('comments.ajaxstore') }}", 
+            type: "POST",
+            data: { 
+                "_token": "{{ csrf_token() }}",
+                "id": "{{ $post->id }}",
+                "comment": comment
+            },
+            success: function(output){
+                if (output.name.length !== undefined) {
+                    var html = '';
+                    html += '<strong class="pull-left primary-font">'+output.name+'</strong>';
+                    html += '<small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>';
+                    html += output.date+'</small></br>';
+                    html += '<li class="ui-state-default">'+output.comment+'</li></br>';
+                    $("#sortable").prepend(html);
+                }
+                $("#userComment").val('');
+            }
+        });
+    });
+});
 </script>
 @endsection
