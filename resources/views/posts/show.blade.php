@@ -10,7 +10,7 @@
             <div class="post-preview">
             <h2 class="post-title">
             {{ $post->title }}
-            </h2>
+            </h2> 
             <p class="small post-meta">Posted by
               <a href="#">Start Bootstrap</a>
               on July 8, 2018
@@ -43,7 +43,7 @@
             @foreach($comments as $comment)
             <strong class="pull-left primary-font">{{$comment->name}}</strong>
             <small class="pull-right text-muted">
-               <span class="glyphicon glyphicon-time"></span>{{ $comment->created_at }}
+               <span class="glyphicon glyphicon-time"></span> {{ $comment->created_at }}
             </small>
             </br>
             <li class="ui-state-default"> {{$comment->content}}</li>
@@ -76,7 +76,7 @@ $(document).ready(function(){
                 if (output.name.length !== undefined) {
                     var html = '';
                     html += '<strong class="pull-left primary-font">'+output.name+'</strong>';
-                    html += '<small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>';
+                    html += '<small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span> ';
                     html += output.date+'</small></br>';
                     html += '<li class="ui-state-default">'+output.comment+'</li></br>';
                     $("#sortable").prepend(html);

@@ -23,7 +23,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-            return view('category.index', ['categories' => Category::all()]);
+        return view('category.index', ['categories' => Category::all()]);
     }
 
     /**
@@ -40,7 +40,7 @@ class CategoryController extends Controller
         if($category !== null) 
             return view('category.show', ['category' => $category]);
         else
-            return redirect()->action('MainController@index');
+            return redirect()->route('home');
     }
 
     /**
@@ -73,7 +73,7 @@ class CategoryController extends Controller
         $category->description = $request->message;
         $category->save();
 
-        return redirect()->action('MainController@index');
+        return redirect()->route('home');
     }
 
     /**
@@ -103,7 +103,7 @@ class CategoryController extends Controller
             'description' => request('message'),
             'user_id' => auth()->id()
         ]);
- 		return redirect()->action('MainController@index');
+ 		return redirect()->route('home');
     }
 
 }

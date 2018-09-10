@@ -24,7 +24,7 @@
                      <a href="{{ route('category.delete', ['id' => $category->id]) }}" onclick="return confirm('Really delete this Category?')">[Delete]</a>  
                   </span>
                 </div>
-              <p class="category-subtitle">
+              <p class="small post-meta">
                 {!! $category->description !!}
               </p>
             @foreach($category->posts as $post)  

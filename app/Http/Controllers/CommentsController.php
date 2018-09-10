@@ -110,7 +110,7 @@ class CommentsController extends Controller
         $result = [
             'comment' => $comment->content,
             'name' =>  $comment->user->name,
-            'date' =>  $comment->created_at->diffForHumans()
+            'date' =>  $comment->created_at->toDateTimeString()
         ];
 
         return response()->json($result);

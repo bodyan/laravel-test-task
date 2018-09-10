@@ -20,6 +20,7 @@
         <!-- Custom styles for this template -->
         <link href="{{ asset('css/blog.css') }}" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body>
