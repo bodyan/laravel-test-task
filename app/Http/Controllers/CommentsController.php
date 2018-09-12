@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use Illuminate\Http\Request;
 use App\Comments;
 use App\Posts;
+use App\User;
+use App\Http\Controllers\Controller;
 
 class CommentsController extends Controller
 {
@@ -97,22 +100,36 @@ class CommentsController extends Controller
 
     public function ajaxstore(Request $request)
     {
-        //if not logged in  - return empty array
-        if(!auth()->id()) return response()->json([]);
+        
+        $required = ['comment' => 'required|min:2'];
 
-        Comments::create([
-            'content' => request('comment'),
-            'posts_id' => request('id'),
-            'user_id' => auth()->id()
-        ]);
+        //if user not logged in, check username field
+        if (!auth()->id()) $required['username'] = 'required';
+
+        $validator = Validator::make($request->all(), $required);
+
+        if ($validator->fails())
+        {
+            return response()->json(['status' => 'error', 'errors'=>$validator->errors()->all()]);
+        }
+
+        if (!auth()->id())
+            User::create([
+                'name' => request('username'),
+                'email' => uniqid(),
+                'password' => mt_rand(1, 5)             
+            ])->comments()->create([
+                'content' => request('comment'),
+                'posts_id' => request('id')
+            ]);
 
         $comment = Comments::with('user')->latest()->first();
-        $result = [
+
+        return response()->json([
+            'status' => 'success',
             'comment' => $comment->content,
             'name' =>  $comment->user->name,
             'date' =>  $comment->created_at->toDateTimeString()
-        ];
-
-        return response()->json($result);
+        ]);
     }
 }
