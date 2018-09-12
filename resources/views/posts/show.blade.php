@@ -12,8 +12,8 @@
             {{ $post->title }}
             </h2> 
             <p class="small post-meta">Posted by
-              <a href="#">Start Bootstrap</a>
-              on July 8, 2018
+              <a href="{{ $post->user->id }}"> {{ $post->user->name }} </a>
+              on {{ $post->created_at }}
               @guest
               @else
                 <a href="{{ route('post.edit', ['id' => $post->id]) }}">[Edit]</a>
@@ -28,6 +28,9 @@
         <div class="well">
         @include('layouts.errors')
         <div class="alert alert-danger" style="display:none"></div>
+        <div class="alert alert-success" style="display:none">
+            Your comments successfuly added!
+        </div>
         <h4>What is on your mind?</h4>
             @guest
             <div class="input-group mb-3">
@@ -75,6 +78,7 @@ $(document).ready(function(){
         e.preventDefault();
         //hide, if before were errors
         $('.alert-danger').hide();
+        $('.alert-success').hide();
         var comment = document.getElementById('userComment').value;
         var username = document.getElementById('username').value;
         $.ajax({
@@ -95,6 +99,7 @@ $(document).ready(function(){
                     html += '<li class="ui-state-default">'+output.comment+'</li></br>';
                     $("#sortable").prepend(html);
                     $("#userComment").val('');
+                    $('.alert-success').show();
                 } else if(output.status == 'error') {
                     $.each(output.errors, function(key, value){
                         $('.alert-danger').show();
