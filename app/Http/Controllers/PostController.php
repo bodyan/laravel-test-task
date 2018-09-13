@@ -56,7 +56,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Posts $post, Comments $comments)
+    public function show(Posts $post, Comments $comments, Request $request )
     {
         $posts = Posts::with(['user','category','comments'])->find($post->id);
         $com = $comments->getComments($post->id);

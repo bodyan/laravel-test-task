@@ -1,5 +1,11 @@
 <!-- Navigation -->
+
     <div class="blog-masthead">
+            <ul class="browser-list list-inline">
+                @foreach($browsers as $browser)
+                <li class="list-inline-item">{{ $browser->browser }} : {{ $browser->total }}</li>
+                @endforeach
+            </ul>
       <div class="container">
           <nav class="nav navbar-expand-md navbar-light navbar-laravel">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

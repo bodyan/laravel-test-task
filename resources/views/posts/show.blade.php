@@ -27,11 +27,9 @@
 
         <div class="well">
         @include('layouts.errors')
-        <div class="alert alert-danger" style="display:none"></div>
-        <div class="alert alert-success" style="display:none">
-            Your comments successfuly added!
-        </div>
+        <div id="notifications" style="display:none"></div>
         <h4>What is on your mind?</h4>
+            <form >
             @guest
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -51,6 +49,7 @@
             <button id="commentCubmit" class="btn btn-primary">
                 {{ __('Add Comment') }}
             </button>
+            </form>
         <hr>
         <h6>Comments:</h6>
         <ul id="sortable" class="list-unstyled ui-sortable">
@@ -76,9 +75,9 @@
 $(document).ready(function(){
     $('#commentCubmit').click(function(e) {
         e.preventDefault();
-        //hide, if before were errors
-        $('.alert-danger').hide();
-        $('.alert-success').hide();
+        //clean, if before were errors
+        $('#notifications').hide().html('');
+        $("#notifications").attr('class', '');
         var comment = document.getElementById('userComment').value;
         var username = document.getElementById('username').value;
         $.ajax({
@@ -99,11 +98,13 @@ $(document).ready(function(){
                     html += '<li class="ui-state-default">'+output.comment+'</li></br>';
                     $("#sortable").prepend(html);
                     $("#userComment").val('');
-                    $('.alert-success').show();
+                    $('#notifications').addClass("alert alert-success").html('Your comment successfuly added!');
+                    $('#notifications').show();
                 } else if(output.status == 'error') {
                     $.each(output.errors, function(key, value){
-                        $('.alert-danger').show();
-                        $('.alert-danger').append('<p>'+value+'</p>');
+                        $('#notifications').addClass("alert alert-danger");
+                        $('#notifications').show();
+                        $('#notifications').append('<p>'+value+'</p>');
                     });
                 } 
             }
